@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -29,7 +30,9 @@ class Vendor {
      * @param amt how much money to add
      * */
     void addMoney (double amt) {
-        this.balance = this.balance + amt;
+        if(amt > 0) {
+            this.balance = this.balance + amt;
+        }
     }
 
     /** attempt to purchase named item.  Message returned if
@@ -52,7 +55,7 @@ class Vendor {
 
     void restock(String name, int amount){
         Item item = Stock.get(name);
-        if(item != null) {
+        if(item != null && amount > 0) {
             item.restock(amount);
         }
     }
@@ -63,6 +66,20 @@ class Vendor {
             return it.stock;
         }
         return 0;
+    }
+
+    void changeItemName(String oldName, String newName){
+        Item it = Stock.get(oldName);
+        if(it != null) {
+            Stock.remove(oldName);
+            Stock.put(newName, it);
+        }
+    }
+
+    void emptyStock(){
+    //    for(Map.Entry<String, Item> item: Stock){
+//
+  //      }
     }
 }
 
