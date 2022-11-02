@@ -50,6 +50,20 @@ class Vendor {
         else System.out.println("Sorry, don't know that item");
     }
 
+    void restock(String name, int amount){
+        Item item = Stock.get(name);
+        if(item != null) {
+            item.restock(amount);
+        }
+    }
+
+    int getStock(String name){
+        Item it = Stock.get(name);
+        if(it != null) {
+            return it.stock;
+        }
+        return 0;
+    }
 }
 
 class Examples {
