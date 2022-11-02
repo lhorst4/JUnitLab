@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -15,7 +16,11 @@ class Vendor {
         Stock.put("Gum", new Item(.5, numGum));
         this.balance = 0;
     }
-
+    Vendor(int numCandy, int numGum, double initialBalance) {
+        Stock.put("Candy", new Item(1.25, numCandy));
+        Stock.put("Gum", new Item(.5, numGum));
+        this.balance = initialBalance;
+    }
     /** resets the Balance to 0 */
     void resetBalance () {
         this.balance = 0;
@@ -76,13 +81,11 @@ class Vendor {
         }
     }
 
-    void emptyStock(){
-    //    for(Map.Entry<String, Item> item: Stock){
-//
-  //      }
+    void emptyStock() {
+        Set set = Stock.keySet();
+        for(Object s: set){
+            Item it = Stock.get(s);
+            it.stock = 0;
+        }
     }
 }
-
-class Examples {
-}
-

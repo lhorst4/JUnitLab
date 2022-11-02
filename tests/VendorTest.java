@@ -21,6 +21,12 @@ public class VendorTest {
         v.addMoney(0);
         assertEquals(v.getBalance(), 0);
     }
+    @Test void addMoneyWithInitial(){
+        Vendor v = new Vendor(4, 4, 5);
+        v.addMoney(5);
+        v.addMoney(-4);
+        assertEquals(v.getBalance(), 10);
+    }
     @Test void buyWithMoney(){
         Vendor v = new Vendor(5,5);
         v.addMoney(10);
@@ -63,9 +69,10 @@ public class VendorTest {
         assertEquals(v.getStock("candee"), 5);
     }
 
-//    @Test void emptyItem(){
-//        Vendor v = new Vendor(5, 5);
-//        v.emptyStock();
-//        assertEquals(v.getStock("Candy"), 0);
-//    }
+    @Test void emptyItem(){
+        Vendor v = new Vendor(5, 5);
+        v.emptyStock();
+        assertEquals(v.getStock("Candy"), 0);
+        assertEquals(v.getStock("Gum"), 0);
+    }
 }
