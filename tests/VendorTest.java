@@ -1,78 +1,94 @@
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.Random;
 
 public class VendorTest {
 
+    Vendor vendor;
+    @BeforeEach
+    void setup(){
+        vendor = new Vendor(1, 2);
+        System.out.println("setup");
+    }
+    @BeforeAll static void init(){
+        System.out.println("init");
+    }
     @Test
     void addMoneyPositive() {
-        Vendor v = new Vendor(1, 1);
-        v.addMoney(3);
-        assertEquals(v.getBalance(), 3);
+        vendor.addMoney(2.0);
+        assertEquals(2.0, vendor.getBalance());
     }
     @Test
     void addMoneyNegative() {
-        Vendor v = new Vendor(1, 1);
-        v.addMoney(-3);
-        assertEquals(v.getBalance(), 0);
+        vendor.addMoney(-3);
+        assertEquals(0, vendor.getBalance());
     }
     @Test
     void addMoneyZero() {
-        Vendor v = new Vendor(1, 1);
-        v.addMoney(0);
-        assertEquals(v.getBalance(), 0);
+        vendor.addMoney(0);
+        assertEquals(0, vendor.getBalance());
+    }
+    @RepeatedTest(5)
+    @DisplayName("Add Random Value (x5)")
+    void addRandomValue(){
+        Random r = new Random(100);
+        double num = r.nextDouble();
+        vendor.addMoney(num);
+        assertEquals(num, vendor.getBalance());
     }
     @Test void addMoneyWithInitial(){
         Vendor v = new Vendor(4, 4, 5);
         v.addMoney(5);
         v.addMoney(-4);
-        assertEquals(v.getBalance(), 10);
+        assertEquals(10, v.getBalance());
     }
     @Test void buyWithMoney(){
-        Vendor v = new Vendor(5,5);
-        v.addMoney(10);
-        v.select("Candy");
-        assertEquals(v.getBalance(), 8.75);
+        vendor.addMoney(2);
+        vendor.select("Gum");
+        assertEquals(1.5, vendor.getBalance());
     }
     @Test void buyWithoutMoney(){
-        Vendor v = new Vendor(5,5);
-        v.select("Candy");
-        assertEquals(v.getBalance(), 0);
+        vendor.select("Candy");
+        assertEquals(0, vendor.getBalance());
+    }
+
+    @Test void buyWithoutStock(){
+        vendor.emptyStock();
+        vendor.addMoney(5);
+        vendor.select("Candy");
+        assertEquals(0, vendor.getStock("Candy"));
     }
 
     @Test void restockPositive() {
-        Vendor v = new Vendor(5, 5);
-        v.restock("Candy", 4);
-        assertEquals(v.getStock("Candy"), 9);
+        vendor.restock("Candy", 4);
+        assertEquals(5, vendor.getStock("Candy"));
     }
     @Test void restockNegative() {
-        Vendor v = new Vendor(5, 5);
-        v.restock("Candy", -4);
-        assertEquals(v.getStock("Candy"), 5);
+        vendor.restock("Candy", -4);
+        assertEquals(1, vendor.getStock("Candy"));
     }
     @Test void restockZero() {
-        Vendor v = new Vendor(5, 5);
-        v.restock("Candy", 0);
-        assertEquals(v.getStock("Candy"), 5);
+        vendor.restock("Candy", 0);
+        assertEquals(1, vendor.getStock("Candy"));
     }
 
     @Test void buyAfterRestock(){
-        Vendor v = new Vendor(0, 0);
-        v.restock("Candy", 1);
-        v.addMoney(10);
-        v.select("Candy");
-        assertEquals(v.getBalance(), 8.75);
+        vendor.emptyStock();
+        vendor.addMoney(10);
+        vendor.restock("Candy", 1);
+        vendor.select("Candy");
+        assertEquals(8.75, vendor.getBalance());
     }
 
     @Test void changeItemName(){
-        Vendor v = new Vendor(5, 5);
-        v.changeItemName("Candy", "candee");
-        assertEquals(v.getStock("candee"), 5);
+        vendor.changeItemName("Candy", "candee");
+        assertEquals(1, vendor.getStock("candee"));
     }
 
     @Test void emptyItem(){
-        Vendor v = new Vendor(5, 5);
-        v.emptyStock();
-        assertEquals(v.getStock("Candy"), 0);
-        assertEquals(v.getStock("Gum"), 0);
+        vendor.emptyStock();
+        assertEquals(0, vendor.getStock("Candy"));
+        assertEquals(0, vendor.getStock("Gum"));
     }
 }

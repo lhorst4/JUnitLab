@@ -48,6 +48,10 @@ class Vendor {
     void select (String name) {
         if (Stock.containsKey(name)) {
             Item item = Stock.get(name);
+            if(getStock(name) == 0){
+                System.out.println("Item out of stock");
+                return;
+            }
             if (balance >= item.price) {
                 item.purchase(1);
                 this.balance = this.balance - item.price;
