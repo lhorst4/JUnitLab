@@ -25,6 +25,9 @@ class Vendor {
     void resetBalance () {
         this.balance = 0;
     }
+    void addItem(String name, int count, double price){
+        Stock.put(name, new Item(price, count));
+    }
 
     /** returns the current balance */
     double getBalance () {
@@ -91,5 +94,15 @@ class Vendor {
             Item it = Stock.get(s);
             it.stock = 0;
         }
+    }
+
+    public String toString(){
+        String str = "";
+        Set set = Stock.keySet();
+        for(Object s: set){
+            Item it = Stock.get(s);
+            str += s.toString() + " : " + getStock(s.toString()) + "\n";
+        }
+        return str;
     }
 }

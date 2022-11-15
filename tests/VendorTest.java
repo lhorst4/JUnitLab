@@ -9,10 +9,10 @@ public class VendorTest {
     @BeforeEach
     void setup(){
         vendor = new Vendor(1, 2);
-        System.out.println("setup");
+        //System.out.println("setup");
     }
     @BeforeAll static void init(){
-        System.out.println("init");
+        //System.out.println("init");
     }
     @Test
     void addMoneyPositive() {
@@ -90,5 +90,19 @@ public class VendorTest {
         vendor.emptyStock();
         assertEquals(0, vendor.getStock("Candy"));
         assertEquals(0, vendor.getStock("Gum"));
+    }
+    @Test void printInvenory2(){
+        //System.out.println(vendor.toString());
+        assertEquals("Candy : 1\nGum : 2\n", vendor.toString());
+    }
+    @Test void addItemTest(){
+        vendor.addItem("Sucker", 3, 0.75);
+        vendor.addMoney(1.0);
+        vendor.select("Sucker");
+        assertEquals(0.25, 0.25);
+    }
+    @Test void printInvenoryAfterAdd(){
+        vendor.addItem("Sucker", 3, 0.75);
+        assertEquals("Sucker : 3\nCandy : 1\nGum : 2\n", vendor.toString());
     }
 }
