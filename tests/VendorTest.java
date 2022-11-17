@@ -93,7 +93,14 @@ public class VendorTest {
     }
     @Test void printInvenory2(){
         //System.out.println(vendor.toString());
-        assertEquals("Candy : 1\nGum : 2\n", vendor.toString());
+        assertEquals(
+                "--------------------\n" +
+                "Candy : 1\n" +
+                "Price : $1.25\n" +
+                "Gum : 2\n" +
+                "Price : $0.5\n" +
+                "Balance : 0.0\n" +
+                "--------------------\n", vendor.toString());
     }
     @Test void addItemTest(){
         vendor.addItem("Sucker", 3, 0.75);
@@ -101,8 +108,44 @@ public class VendorTest {
         vendor.select("Sucker");
         assertEquals(0.25, 0.25);
     }
-    @Test void printInvenoryAfterAdd(){
-        vendor.addItem("Sucker", 3, 0.75);
-        assertEquals("Sucker : 3\nCandy : 1\nGum : 2\n", vendor.toString());
+
+    @Test void printInventory(){
+        Main main = new Main();
+        main.main();
+        assertEquals("--------------------\n" +
+                "Candy : 7\n" +
+                "Price : $1.25\n" +
+                "Gum : 8\n" +
+                "Price : $0.5\n" +
+                "Balance : 1.0\n" +
+                "--------------------\n" +
+                "--------------------\n" +
+                "Candy : 7\n" +
+                "Price : $1.25\n" +
+                "Gum : 8\n" +
+                "Price : $0.5\n" +
+                "Balance : 5.0\n" +
+                "--------------------\n" +
+                "--------------------\n" +
+                "Candy : 7\n" +
+                "Price : $1.25\n" +
+                "Gum : 8\n" +
+                "Price : $0.5\n" +
+                "Balance : 3.0\n" +
+                "--------------------\n" +
+                "--------------------\n" +
+                "Candy : 7\n" +
+                "Price : $1.25\n" +
+                "Gum : 8\n" +
+                "Price : $0.5\n" +
+                "Balance : 2.5\n" +
+                "--------------------\n" +
+                "--------------------\n" +
+                "Candy : 7\n" +
+                "Price : $1.25\n" +
+                "Gum : 8\n" +
+                "Price : $0.5\n" +
+                "Balance : 0.0\n" +
+                "--------------------\n", main.str);
     }
 }

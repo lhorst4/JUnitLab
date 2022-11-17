@@ -97,12 +97,13 @@ class Vendor {
     }
 
     public String toString(){
-        String str = "";
+        String str = "--------------------\n";
         Set set = Stock.keySet();
         for(Object s: set){
             Item it = Stock.get(s);
-            str += s.toString() + " : " + getStock(s.toString()) + "\n";
+            str += s.toString() + " : " + getStock(s.toString()) + "\n" + "Price : $" + it.price + "\n";
         }
+        str = str + "Balance : " + balance + "\n--------------------\n";
         return str;
     }
 }
